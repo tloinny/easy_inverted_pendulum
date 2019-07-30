@@ -53,6 +53,7 @@ float inverted_pendulum::PositionLoopUpdate(float position_feedback)
 	PositionError *= 0.8;
 	PositionError += PositionLeast * 0.2;	/* low pass filter */
 	PositionDTerm = PositionError - PositionLastError;
+	PositionLastError = PositionError;
 	PositionOutput = position_kp * PositionError + position_kd * PositionDTerm;
 	return PositionOutput;
 }
@@ -77,6 +78,13 @@ float inverted_pendulum::InvertedPendulumUpdate(float angle_encoder, float posit
 		PositionOutput = -1 * PositionOutputLimit;
 	}
 	InvertedPendulumOutput = AngleOutput + PositionOutput;
+	/*if (InvertedPendulumOutput > 255)
+	{
+		InvertedPendulumOutput = 255;
+	}else if (InvertedPendulumOutput < -255)
+	{
+		InvertedPendulumOutput = -255;
+	}*/
 	return InvertedPendulumOutput;
 }
 
