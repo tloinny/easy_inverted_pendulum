@@ -69,7 +69,6 @@ float inverted_pendulum::PositionLoopUpdate(float position_feedback)
 	if (delta_time >= PositionLoopSampleTime && delta_time > 0)
 	{
 		PositionLastTime = PositionCurrentTime;
-		//PositionError = PositionLeast;
 		PositionDTerm = (PositionError - PositionLastError) / delta_time;
 		PositionOutput = position_kp * PositionError + position_kd * PositionDTerm;
 		PositionLastError = PositionError;
@@ -106,20 +105,9 @@ float inverted_pendulum::InvertedPendulumUpdate(float angle_encoder, float posit
 	{
 		PositionOutput = -1 * PositionOutputLimit;
 	}
-	/*
-	Serial.print("angle_output:");
-	Serial.print(AngleOutput);
-	Serial.print(",");
-	Serial.print("position_output:");
-	Serial.print(PositionOutput);
-	Serial.print(",");
-	*/
+
 	InvertedPendulumOutput = AngleOutput + PositionOutput;
-	/*
-	Serial.print("output:");
-	Serial.print(InvertedPendulumOutput);
-	Serial.print(" ,");
-	*/
+
 	if (InvertedPendulumOutput > 255)
 	{
 		InvertedPendulumOutput = 255;
@@ -127,11 +115,7 @@ float inverted_pendulum::InvertedPendulumUpdate(float angle_encoder, float posit
 	{
 		InvertedPendulumOutput = -255;
 	}
-	/*
-	Serial.print("output limit:");
-	Serial.print(InvertedPendulumOutput);
-	Serial.println();
-	*/
+
 	return InvertedPendulumOutput;
 }
 
